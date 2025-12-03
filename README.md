@@ -28,4 +28,3 @@ The command will parse each tutorial listed in `data/tutorial_list.yaml`, call t
 - `--full-context`: Send full tutorial body + headings to the LLM (default only sends metadata + summary to keep prompts small).
 - `--download-datasets`: Download tutorial datasets (based on GTN metadata) into `--datasets-dir`.
 
-See `plan_benchmark.md` for the full project plan.
