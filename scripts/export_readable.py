@@ -55,6 +55,15 @@ def format_paths_short(paths: list[str]) -> str:
     return ", ".join(short_path(p) for p in paths) if paths else "N/A"
 
 
+def collect_all_datasets(items: list[Dict[str, Any]]) -> list[str]:
+    seen: set[str] = set()
+    for item in items:
+        meta = item.get("metadata", {})
+        for path in meta.get("dataset_paths") or meta.get("datasets") or []:
+            seen.add(path)
+    return sorted(seen)
+
+
 def write_markdown(items: List[Dict[str, Any]], output: Path) -> None:
     grouped = group_by_tutorial(items)
     lines: list[str] = ["# GTN Benchmark Items (Readable)", ""]
@@ -63,9 +72,11 @@ def write_markdown(items: List[Dict[str, Any]], output: Path) -> None:
         meta = first.get("metadata", {})
         title = meta.get("tutorial_title") or tutorial_id
         topic = meta.get("topic", "N/A")
-        tools = format_tools_short(first.get("tools", []))
-        dataset_paths = meta.get("dataset_paths") or meta.get("datasets") or []
-        dataset_count = meta.get("dataset_count") or len(dataset_paths)
+        tools = format_list(first.get("tools", []))  # show full tool ids
+
+        # Use all datasets referenced across items to avoid missing entries.
+        dataset_paths = collect_all_datasets(t_items)
+        dataset_count = len(dataset_paths)
         lines.extend(
             [
                 f"## {title} ({tutorial_id})",
@@ -78,12 +89,11 @@ def write_markdown(items: List[Dict[str, Any]], output: Path) -> None:
         )
         for idx, item in enumerate(t_items, start=1):
             meta = item.get("metadata", {})
-            q_tools = format_tools_short(item.get("tools", []))
+            q_tools = format_list(item.get("tools", []))  # full ids per question
             q_datasets = format_paths_short(meta.get("dataset_paths") or meta.get("datasets") or [])
-            lines.append(
-                f"{idx}. {item.get('id')} — {item.get('query')} "
-                f"(Tools: {q_tools}; Datasets: {q_datasets})"
-            )
+            lines.append(f"- **{item.get('id')}** — {item.get('query')}")
+            lines.append(f"  - Tools: {q_tools}")
+            lines.append(f"  - Datasets: {q_datasets}")
         lines.append("")  # blank line between tutorials
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text("\n".join(lines), encoding="utf-8")
