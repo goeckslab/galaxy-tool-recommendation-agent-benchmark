@@ -1,0 +1,105 @@
+\documentclass{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+\setbeamertemplate{navigation symbols}{}
+
+\title{Galaxy Tool Recommendation Agent Benchmark}
+\author{Benchmark Dataset Overview}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{What is this benchmark?}
+  \begin{itemize}
+    \item Curated question--tool pairs from Galaxy Training Network tutorials.
+    \item Focus: tool recommendation for common genomics workflows.
+    \item Data source: GTN tutorials (e.g., intro, quality control, statistics).
+    \item Goal: evaluate LLMs/agents on picking the right Galaxy tool given a query and dataset context.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Strategy change}
+  \begin{itemize}
+    \item Early attempt: feed full tutorial content to an LLM and ask it to write queries plus collect datasets/tools \textrightarrow{} poor relevance and coverage.
+    \item Revised: provide datasets, tool IDs, and tutorial context; only ask the LLM to generate queries matching those assets (see commit 7c47dcb ``Strategy changed'').
+    \item Result: cleaner questions aligned to the provided tools/datasets with fewer hallucinated resources.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Repository contents}
+  \begin{itemize}
+    \item \texttt{examples/v0\_items.jsonl}: machine-readable benchmark items.
+    \item \texttt{examples/v0\_items\_readable.md}: human-friendly view of questions.
+    \item \texttt{examples/datasets/...}: referenced sample datasets (FASTQ, BAM, TSV).
+    \item \texttt{gtn\_benchmark/query\_generator.py}: generation logic for questions.
+    \item \texttt{scripts/export\_readable.py}: renders JSONL to Markdown.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Item structure}
+  Each JSONL record contains:
+  \begin{itemize}
+    \item \textbf{id}: stable question ID (e.g., \texttt{quality-control-q01}).
+    \item \textbf{query}: natural-language question.
+    \item \textbf{tools}: Galaxy tool IDs with version.
+    \item \textbf{metadata}: topic, tutorial, datasets, workflow name.
+    \item \textbf{context}: tutorial-level info (e.g., topic path).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Tutorial coverage (v0)}
+  \begin{itemize}
+    \item Intro: \texttt{topics/introduction/tutorials/galaxy-intro-short}
+    \item Quality control: \texttt{topics/sequence-analysis/tutorials/quality-control}
+    \item Statistics: \texttt{topics/statistics/tutorials/loris\_model}
+  \end{itemize}
+  \vspace{4mm}
+  See \texttt{examples/v0\_items\_readable.md} for the full list of questions and datasets.
+\end{frame}
+
+\begin{frame}{Evaluation ideas}
+  \begin{itemize}
+    \item Accuracy: exact match on recommended tool ID/version.
+    \item Top-k: credit if the correct tool appears in top predictions.
+    \item Justification quality: score clarity of reasoning and dataset use.
+    \item Robustness: perturb question wording and check stability.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Usage}
+  \begin{itemize}
+    \item Mode 1: use query + dataset names to recommend Galaxy tools (text-only).
+    \item Mode 2: give agents query + dataset paths; they load data, then recommend or run Galaxy tools.
+    \item Render a readable brief: \texttt{python3 scripts/export\_readable.py --input examples/v0\_items.jsonl --output examples/v0\_items\_readable.md}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Notes and constraints}
+  \begin{itemize}
+    \item Tool IDs are GTN-sourced; keep versions stable for comparability.
+    \item Datasets are small excerpts to keep the repo lightweight.
+    \item If adding tutorials, mirror the JSONL schema and update the readable export.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Next steps}
+  \begin{itemize}
+    \item Expand coverage: add more GTN tutorials (e.g., RNA-seq, variant calling).
+    \item Add automated eval harness for LLM tool selection.
+    \item Publish scores and baselines for reproducibility.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \Large Questions? \\
+  \vspace{2mm}
+  \normalsize \texttt{examples/v0\_items\_readable.md} for full content
+\end{frame}
+
+\end{document}
