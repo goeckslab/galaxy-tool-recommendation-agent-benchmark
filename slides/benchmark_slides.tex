@@ -23,7 +23,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Strategy change}
+\begin{frame}{Strategy}
   \begin{itemize}
     \item Early attempt: feed full tutorial content to an LLM and ask it to write queries plus collect datasets/tools \textrightarrow{} poor relevance and coverage.
     \item Revised: provide datasets, tool IDs, and tutorial context; only ask the LLM to generate queries matching those assets (see commit 7c47dcb ``Strategy changed'').
@@ -52,15 +52,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Tutorial coverage (v0)}
-  \begin{itemize}
-    \item Intro: \texttt{topics/introduction/tutorials/galaxy-intro-short}
-    \item Quality control: \texttt{topics/sequence-analysis/tutorials/quality-control}
-    \item Statistics: \texttt{topics/statistics/tutorials/loris\_model}
-  \end{itemize}
-  \vspace{4mm}
-  See \texttt{examples/v0\_items\_readable.md} for the full list of questions and datasets.
-\end{frame}
 
 \begin{frame}{Evaluation ideas}
   \begin{itemize}
@@ -79,16 +70,14 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Notes and constraints}
-  \begin{itemize}
-    \item Tool IDs are GTN-sourced; keep versions stable for comparability.
-    \item Datasets are small excerpts to keep the repo lightweight.
-    \item If adding tutorials, mirror the JSONL schema and update the readable export.
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Next steps}
   \begin{itemize}
+    \item Improve query quality
+    \begin{itemize}
+      \item Manual checks found some LLM items misaligned with GTN intent (e.g., using \texttt{fastq\_quality\_filter} for adapter trimming, or MultiQC for single-sample QC instead of aggregation).
+      \item Generate more items with commercial LLMs (e.g., GPT-4o) in addition to LLaMA 3.1 4-Scout.
+      \item Add an evaluator agent to rate queries.
+    \end{itemize}
     \item Expand coverage: add more GTN tutorials (e.g., RNA-seq, variant calling).
     \item Add automated eval harness for LLM tool selection.
     \item Publish scores and baselines for reproducibility.
