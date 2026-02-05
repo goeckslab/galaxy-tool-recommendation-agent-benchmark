@@ -261,3 +261,14 @@ Each batch is processed manually in review order (200 items per batch target), a
 - epigenetics-ewas-suite-q032
 - epigenetics-ewas-suite-q033
 - epigenetics-ewas-suite-q034
+
+## GTX0046 (2258-2457)
+
+- epigenetics-methylation-seq-q051
+- epigenetics-methylation-seq-q052
+- epigenetics-methylation-seq-q053
+- epigenetics-methylation-seq-q054
+- evolution-mtb_transmission-q063
+- evolution-mtb_transmission-q064
+- evolution-mtb_transmission-q065
+- evolution-mtb_transmission-q066

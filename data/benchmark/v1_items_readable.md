@@ -7266,18 +7266,6 @@ Questions:
 - **epigenetics-methylation-seq-q050** — I want to run quick read-quality checks across a large batch of sequencing samples. Which Galaxy tool can generate those QC reports efficiently?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/falco/falco/1.2.4+galaxy0
   - Datasets: 557099
-- **epigenetics-methylation-seq-q051** — I want to browse my methylation signal track smoothly in a genome browser, so I need a compact, indexed track format. Which Galaxy tool should I use?
-  - Tools: wig_to_bigWig, toolshed.g2.bx.psu.edu/repos/iuc/ucsc_wigtobigwig/ucsc_wigtobigwig/482+galaxy0
-  - Datasets: 557099
-- **epigenetics-methylation-seq-q052** — My signal track is too large for easy visualization; I want an efficient browser-friendly track file. Which Galaxy tool can convert it?
-  - Tools: wig_to_bigWig, toolshed.g2.bx.psu.edu/repos/iuc/ucsc_wigtobigwig/ucsc_wigtobigwig/482+galaxy0
-  - Datasets: 557099
-- **epigenetics-methylation-seq-q053** — Which Galaxy tool should I use to convert a WIG signal track into a BigWig track for genome browsing?
-  - Tools: wig_to_bigWig, toolshed.g2.bx.psu.edu/repos/iuc/ucsc_wigtobigwig/ucsc_wigtobigwig/482+galaxy0
-  - Datasets: 557099
-- **epigenetics-methylation-seq-q054** — I need to share a genome-browser track of my signal that loads quickly over large regions. Which Galaxy tool should I run to create that format?
-  - Tools: wig_to_bigWig, toolshed.g2.bx.psu.edu/repos/iuc/ucsc_wigtobigwig/ucsc_wigtobigwig/482+galaxy0
-  - Datasets: 557099
 
 ## Identification of the binding sites of the T-cell acute lymphocytic leukemia protein 1 (TAL1) (topics/epigenetics/tutorials/tal1-binding-site-identification)
 - Topic: epigenetics
@@ -7732,18 +7720,6 @@ Questions:
   - Datasets: 6010176
 - **evolution-mtb_transmission-q062** — Which Galaxy tool calculates SNP distances between all samples in an alignment and outputs a distance matrix?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/snp_dists/snp_dists/0.8.2+galaxy0
-  - Datasets: 6010176
-- **evolution-mtb_transmission-q063** — I have a pairwise distance matrix between isolates and want to cluster samples into groups that might represent transmission clusters. Which Galaxy tool should I use?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/clustering_from_distmat/clustering_from_distmat/1.1.1
-  - Datasets: 6010176
-- **evolution-mtb_transmission-q064** — To summarize relationships from a distance matrix, I need a clustering step that groups similar samples and produces a cluster assignment or dendrogram. Which Galaxy tool can do this?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/clustering_from_distmat/clustering_from_distmat/1.1.1
-  - Datasets: 6010176
-- **evolution-mtb_transmission-q065** — I need to run clustering using a distance matrix as input and get clustered groups as output. Which Galaxy tool should I use?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/clustering_from_distmat/clustering_from_distmat/1.1.1
-  - Datasets: 6010176
-- **evolution-mtb_transmission-q066** — Which Galaxy tool performs clustering when the input is a precomputed distance matrix between samples?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/clustering_from_distmat/clustering_from_distmat/1.1.1
   - Datasets: 6010176
 - **evolution-mtb_transmission-q067** — I have an MTB variant or resistance results table and want to pull out only lines matching specific genes, mutations, or keywords for closer inspection. Which Galaxy tool should I use?
   - Tools: Grep1, toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_grep_tool/9.5+galaxy2
