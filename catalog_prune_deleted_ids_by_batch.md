@@ -849,3 +849,7 @@ Each batch is processed manually in review order (200 items per batch target), a
 - proteomics-biomarker_selection-q040
 - proteomics-biomarker_selection-q041
 - proteomics-biomarker_selection-q042
+
+## GTX0059 (4310-4509)
+
+- (none)
