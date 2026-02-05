@@ -242,3 +242,22 @@ Each batch is processed manually in review order (200 items per batch target), a
 - epigenetics-cut_and_run-q060
 - epigenetics-cut_and_run-q061
 - epigenetics-cut_and_run-q062
+
+## GTX0045 (2074-2273)
+
+- epigenetics-ewas-suite-q011
+- epigenetics-ewas-suite-q012
+- epigenetics-ewas-suite-q013
+- epigenetics-ewas-suite-q014
+- epigenetics-ewas-suite-q015
+- epigenetics-ewas-suite-q016
+- epigenetics-ewas-suite-q017
+- epigenetics-ewas-suite-q018
+- epigenetics-ewas-suite-q027
+- epigenetics-ewas-suite-q028
+- epigenetics-ewas-suite-q029
+- epigenetics-ewas-suite-q030
+- epigenetics-ewas-suite-q031
+- epigenetics-ewas-suite-q032
+- epigenetics-ewas-suite-q033
+- epigenetics-ewas-suite-q034
