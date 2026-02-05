@@ -1088,3 +1088,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `qiime2 dada2 denoise-single` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/q2d2/qiime2__dada2__denoise_single/qiime2__dada2__denoise_single/2025.10.0+q2galaxy.2025.10.0`, help_len=0, inputs=3)).
 - Changes: Reviewed all items in this range; no catalog-based deletions were needed.
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0042 (catalog prune + review; lines 1526-1725)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Advanced Cut` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_cut_tool/9.5+galaxy3`, help_len=734, inputs=3)).
+- Changes: Reviewed all items in this range; no catalog-based deletions were needed.
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
