@@ -1184,3 +1184,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Split by group` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/bgruening/split_file_on_column/tp_split_on_column/0.6`, help_len=817, inputs=3)).
 - Changes: Reviewed all items in this range; no catalog-based deletions were needed.
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0054 (catalog prune + review; lines 3482-3681)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Concatenate datasets` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_cat/9.5+galaxy2`, help_len=0, inputs=2)).
+- Changes: Deleted 36 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
