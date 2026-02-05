@@ -789,3 +789,8 @@ Each batch is processed manually in review order (200 items per batch target), a
 - metabolomics-qcxms-predictions-q038
 - microbiome-lotus2-identifying-fungi-q011
 - microbiome-lotus2-identifying-fungi-q012
+
+## GTX0057 (3964-4163)
+
+- microbiome-lotus2-identifying-fungi-q013
+- microbiome-lotus2-identifying-fungi-q014
