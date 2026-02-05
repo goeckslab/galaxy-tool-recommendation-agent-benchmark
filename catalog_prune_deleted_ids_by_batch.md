@@ -104,3 +104,41 @@ Each batch is processed manually in review order (200 items per batch target), a
 - climate-argo_pangeo-q019
 - climate-climate-101-q017
 - climate-climate-101-q022
+
+## GTX0036 (381-580)
+
+- climate-earth_system-q011
+- climate-earth_system-q013
+- climate-earth_system-q014
+- climate-ocean-variables-q011
+- climate-ocean-variables-q012
+- climate-ocean-variables-q013
+- climate-ocean-variables-q014
+- climate-ocean_qcv_analysis-q011
+- climate-ocean_qcv_analysis-q012
+- climate-ocean_qcv_analysis-q013
+- climate-ocean_qcv_analysis-q014
+- climate-ocean_qcv_analysis-q015
+- climate-ocean_qcv_analysis-q016
+- climate-ocean_qcv_analysis-q017
+- climate-ocean_qcv_analysis-q018
+- climate-ocean_qcv_analysis-q019
+- climate-ocean_qcv_analysis-q020
+- climate-ocean_qcv_analysis-q021
+- climate-ocean_qcv_analysis-q022
+- climate-ocean_qcv_analysis-q023
+- climate-ocean_qcv_analysis-q024
+- climate-ocean_qcv_analysis-q025
+- climate-ocean_qcv_analysis-q026
+- climate-pangeo-notebook-q011
+- climate-pangeo-notebook-q012
+- climate-pangeo-notebook-q013
+- climate-pangeo-notebook-q014
+- climate-sentinel5_data-q011
+- climate-sentinel5_data-q012
+- climate-sentinel5_data-q013
+- climate-sentinel5_data-q014
+- climate-sentinel5_data-q019
+- climate-sentinel5_data-q020
+- climate-sentinel5_data-q021
+- climate-sentinel5_data-q022
