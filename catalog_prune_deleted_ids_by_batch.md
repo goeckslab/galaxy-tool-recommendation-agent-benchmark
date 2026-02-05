@@ -184,3 +184,50 @@ Each batch is processed manually in review order (200 items per batch target), a
 ## GTX0042 (1526-1725)
 
 - (none)
+
+## GTX0043 (1726-1925)
+
+- ecology-regionalGAM-q051
+- ecology-regionalGAM-q052
+- ecology-regionalGAM-q053
+- ecology-regionalGAM-q054
+- ecology-regionalGAM-q055
+- ecology-regionalGAM-q056
+- ecology-regionalGAM-q057
+- ecology-regionalGAM-q058
+- ecology-regionalGAM-q063
+- ecology-regionalGAM-q064
+- ecology-regionalGAM-q065
+- ecology-regionalGAM-q066
+- ecology-regionalGAM-q067
+- ecology-regionalGAM-q068
+- ecology-regionalGAM-q069
+- ecology-regionalGAM-q070
+- ecology-regionalGAM-q071
+- ecology-regionalGAM-q072
+- ecology-regionalGAM-q073
+- ecology-regionalGAM-q074
+- ecology-regionalGAM-q075
+- ecology-regionalGAM-q076
+- ecology-regionalGAM-q077
+- ecology-regionalGAM-q078
+- ecology-remote-sensing-q027
+- ecology-remote-sensing-q028
+- ecology-remote-sensing-q029
+- ecology-remote-sensing-q030
+- ecology-remote-sensing-q031
+- ecology-remote-sensing-q032
+- ecology-remote-sensing-q033
+- ecology-remote-sensing-q034
+- ecology-species-distribution-modeling-q011
+- ecology-species-distribution-modeling-q012
+- ecology-species-distribution-modeling-q013
+- ecology-species-distribution-modeling-q014
+- ecology-species-distribution-modeling-q015
+- ecology-species-distribution-modeling-q016
+- ecology-species-distribution-modeling-q017
+- ecology-species-distribution-modeling-q018
+- ecology-x-array-map-plot-q019
+- ecology-x-array-map-plot-q020
+- ecology-x-array-map-plot-q021
+- ecology-x-array-map-plot-q022
