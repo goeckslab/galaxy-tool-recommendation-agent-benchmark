@@ -1016,3 +1016,11 @@ Notes:
 - Changes: Reviewed all 200 items; no items required catalog-based deletion and no new ground-truth alternatives were added in this batch.
 - Query hygiene: Rewrote 1 query to remove an exact duplicate across variant-analysis tutorials while keeping intent unchanged (`variant-analysis-somatic-variant-discovery-q017`).
 - Validation: check_v1_items passes for this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates (remaining near-duplicate pairs acceptable).
+
+## GTX0033 (catalog prune + review; lines 6283-6329)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for the remaining items at the end of data/benchmark/v1_items.jsonl, with catalog-based pruning when the referenced tool is missing from the tool universe snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review to validate tool existence and semantics/IO (e.g., checked the FastQC tool entry via helptext/IO fields).
+- Changes: Reviewed all 47 items; no items required catalog-based deletion in this range, and no query rewrites or new ground-truth alternatives were added.
+- Validation: check_v1_items passes for this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates/near-duplicates.
