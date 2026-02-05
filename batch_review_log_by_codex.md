@@ -1272,3 +1272,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Extract element identifiers` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/collection_element_identifiers/collection_element_identifiers/0.0.2`, help_len=157, inputs=1)).
 - Changes: Reviewed all items in this range; no catalog-based deletions were needed.
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0065 (catalog prune + review; lines 5510-5638)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 129 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `FastQC` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/0.74+galaxy1`, help_len=2400, inputs=7)).
+- Changes: Reviewed all items in this range; no catalog-based deletions were needed.
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
