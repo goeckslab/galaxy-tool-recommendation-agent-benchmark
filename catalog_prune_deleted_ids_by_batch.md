@@ -330,3 +330,36 @@ Each batch is processed manually in review order (200 items per batch target), a
 - genome-annotation-comparison-braker-helixer-annotation-q040
 - genome-annotation-comparison-braker-helixer-annotation-q041
 - genome-annotation-comparison-braker-helixer-annotation-q042
+
+## GTX0049 (2798-2997)
+
+- genome-annotation-helixer-q035
+- genome-annotation-helixer-q036
+- genome-annotation-helixer-q037
+- genome-annotation-helixer-q038
+- genome-annotation-hpc-for-lsgc-q019
+- genome-annotation-hpc-for-lsgc-q020
+- genome-annotation-hpc-for-lsgc-q021
+- genome-annotation-hpc-for-lsgc-q022
+- genome-annotation-hpc-for-lsgc-q023
+- genome-annotation-hpc-for-lsgc-q024
+- genome-annotation-hpc-for-lsgc-q025
+- genome-annotation-hpc-for-lsgc-q026
+- genome-annotation-repeatmasker-q011
+- genome-annotation-repeatmasker-q012
+- genome-annotation-repeatmasker-q013
+- genome-annotation-repeatmasker-q014
+- genome-annotation-secondary-metabolite-discovery-q055
+- genome-annotation-secondary-metabolite-discovery-q056
+- genome-annotation-secondary-metabolite-discovery-q057
+- genome-annotation-secondary-metabolite-discovery-q058
+- genome-annotation-tnseq-q031
+- genome-annotation-tnseq-q032
+- genome-annotation-tnseq-q033
+- genome-annotation-tnseq-q034
+- imaging-2D-spot-detection-q011
+- imaging-2D-spot-detection-q012
+- imaging-2D-spot-detection-q013
+- imaging-2D-spot-detection-q014
+- imaging-2D-spot-detection-q015
+- imaging-2D-spot-detection-q016
