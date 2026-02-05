@@ -1200,3 +1200,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `xcms findChromPeaks Merger` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/lecorguille/xcms_merge/xcms_merge/3.12.0+galaxy3`, help_len=4940, inputs=3)).
 - Changes: Deleted 76 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0056 (catalog prune + review; lines 3770-3969)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Compound conversion` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/bgruening/openbabel_compound_convert/openbabel_compound_convert/3.1.1+galaxy1`, help_len=526, inputs=9)).
+- Changes: Deleted 6 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.

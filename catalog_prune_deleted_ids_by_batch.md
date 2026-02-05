@@ -780,3 +780,12 @@ Each batch is processed manually in review order (200 items per batch target), a
 - metabolomics-msi-finding-nglycans-q056
 - metabolomics-msi-finding-nglycans-q057
 - metabolomics-msi-finding-nglycans-q058
+
+## GTX0056 (3770-3969)
+
+- metabolomics-qcxms-predictions-q035
+- metabolomics-qcxms-predictions-q036
+- metabolomics-qcxms-predictions-q037
+- metabolomics-qcxms-predictions-q038
+- microbiome-lotus2-identifying-fungi-q011
+- microbiome-lotus2-identifying-fungi-q012
