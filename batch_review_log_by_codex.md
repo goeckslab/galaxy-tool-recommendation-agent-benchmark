@@ -1048,3 +1048,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Scatterplot with ggplot2` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/ggplot2_point/ggplot2_point/3.4.0+galaxy1`, help_len=593, inputs=8)).
 - Changes: Deleted 35 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0037 (catalog prune + review; lines 546-745)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Taylor-Butina clustering` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/bgruening/chemfp/ctb_chemfp_butina_clustering/1.6.1+0`, help_len=1438, inputs=2)).
+- Changes: Deleted 4 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.

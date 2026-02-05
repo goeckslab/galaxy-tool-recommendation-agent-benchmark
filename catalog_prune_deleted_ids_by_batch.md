@@ -142,3 +142,10 @@ Each batch is processed manually in review order (200 items per batch target), a
 - climate-sentinel5_data-q020
 - climate-sentinel5_data-q021
 - climate-sentinel5_data-q022
+
+## GTX0037 (546-745)
+
+- computational-chemistry-covid19-docking-q039
+- computational-chemistry-covid19-docking-q040
+- computational-chemistry-covid19-docking-q041
+- computational-chemistry-covid19-docking-q042
