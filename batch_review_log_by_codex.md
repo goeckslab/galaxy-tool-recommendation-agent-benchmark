@@ -1072,3 +1072,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Datamash` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/datamash_ops/datamash_ops/1.9+galaxy0`, help_len=2578, inputs=9)).
 - Changes: Reviewed all items in this range; no catalog-based deletions were needed.
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0040 (catalog prune + review; lines 1126-1325)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Datamash` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/datamash_ops/datamash_ops/1.9+galaxy0`, help_len=2578, inputs=9)).
+- Changes: Reviewed all items in this range; no catalog-based deletions were needed.
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
