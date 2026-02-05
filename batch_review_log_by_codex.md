@@ -998,3 +998,12 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review to validate tool existence and semantics/IO (e.g., checked a tabular text-transformation tool entry via helptext/IO fields).
 - Changes: Reviewed all 200 items; no items required catalog-based deletion in this range, and no query rewrites or new ground-truth alternatives were added.
 - Validation: check_v1_items passes for this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates/near-duplicates.
+
+## GTX0031 (catalog prune + review; lines 5883-6082)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in data/benchmark/v1_items.jsonl, with catalog-based pruning when the referenced tool is missing from the tool universe snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review to validate tool existence and semantics/IO (e.g., checked the grep-style text search tool entry via helptext/IO fields).
+- Changes: Reviewed all 200 items; no items required catalog-based deletion and no new ground-truth alternatives were added in this batch.
+- Query hygiene: Rewrote 2 queries to remove exact duplicates across transcriptomics tutorials while keeping intent unchanged (`transcriptomics-ref-based-q034`, `transcriptomics-ref-based-q035`).
+- Validation: check_v1_items passes for this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates (remaining near-duplicate pairs acceptable).

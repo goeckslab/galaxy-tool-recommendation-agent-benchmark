@@ -19863,10 +19863,10 @@ Questions:
 - **transcriptomics-ref-based-q033** — I have a mapping of sample IDs to group labels and want to tag datasets in a collection with those labels for downstream steps. Which Galaxy tool should I use?
   - Tools: __TAG_FROM_FILE__
   - Datasets: 6457007
-- **transcriptomics-ref-based-q034** — I need to search a text file for lines matching a pattern and keep only the matching or non-matching lines. Which Galaxy tool should I use?
+- **transcriptomics-ref-based-q034** — I have a large text-based annotation or results file and need to pull out only lines for a set of gene/transcript identifiers using pattern matching. Which Galaxy tool should I use for grep-style line selection?
   - Tools: toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_grep_tool/9.5+galaxy3
   - Datasets: 6457007
-- **transcriptomics-ref-based-q035** — I have a collection and a list of element identifiers to keep or remove, and I want to filter the collection accordingly. Which Galaxy tool should I use?
+- **transcriptomics-ref-based-q035** — I have a dataset collection (e.g., many per-sample files) and a plain-text list of element names that should be kept or removed. Which Galaxy tool can filter the collection based on that list?
   - Tools: __FILTER_FROM_FILE__
   - Datasets: 6457007
 - **transcriptomics-ref-based-q036** — I want to filter a tabular dataset using a simple expression on one or more columns (for example adjusted p-value threshold). Which Galaxy tool should I use?
