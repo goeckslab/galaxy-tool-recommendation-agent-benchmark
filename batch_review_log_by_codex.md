@@ -1064,3 +1064,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Search in textfiles` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_grep_tool/9.5+galaxy2`, help_len=0, inputs=8)).
 - Changes: Deleted 16 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0039 (catalog prune + review; lines 926-1125)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Datamash` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/datamash_ops/datamash_ops/1.9+galaxy0`, help_len=2578, inputs=9)).
+- Changes: Reviewed all items in this range; no catalog-based deletions were needed.
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
