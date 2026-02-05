@@ -231,3 +231,14 @@ Each batch is processed manually in review order (200 items per batch target), a
 - ecology-x-array-map-plot-q020
 - ecology-x-array-map-plot-q021
 - ecology-x-array-map-plot-q022
+
+## GTX0044 (1882-2081)
+
+- epigenetics-atac-seq-q051
+- epigenetics-atac-seq-q052
+- epigenetics-atac-seq-q053
+- epigenetics-atac-seq-q054
+- epigenetics-cut_and_run-q059
+- epigenetics-cut_and_run-q060
+- epigenetics-cut_and_run-q061
+- epigenetics-cut_and_run-q062
