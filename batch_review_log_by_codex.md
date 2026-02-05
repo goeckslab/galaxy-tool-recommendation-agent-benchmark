@@ -1216,3 +1216,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `MEGAHIT` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/megahit/megahit/1.2.9+galaxy2`, help_len=476, inputs=4)).
 - Changes: Deleted 2 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0058 (catalog prune + review; lines 4162-4361)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Kraken2` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.17.1+galaxy0`, help_len=1476, inputs=9)).
+- Changes: Deleted 52 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
