@@ -1007,3 +1007,12 @@ Notes:
 - Changes: Reviewed all 200 items; no items required catalog-based deletion and no new ground-truth alternatives were added in this batch.
 - Query hygiene: Rewrote 2 queries to remove exact duplicates across transcriptomics tutorials while keeping intent unchanged (`transcriptomics-ref-based-q034`, `transcriptomics-ref-based-q035`).
 - Validation: check_v1_items passes for this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates (remaining near-duplicate pairs acceptable).
+
+## GTX0032 (catalog prune + review; lines 6083-6282)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in data/benchmark/v1_items.jsonl, with catalog-based pruning when the referenced tool is missing from the tool universe snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review to validate tool existence and semantics/IO (e.g., checked a visualization/plotting tool entry via helptext/IO fields).
+- Changes: Reviewed all 200 items; no items required catalog-based deletion and no new ground-truth alternatives were added in this batch.
+- Query hygiene: Rewrote 1 query to remove an exact duplicate across variant-analysis tutorials while keeping intent unchanged (`variant-analysis-somatic-variant-discovery-q017`).
+- Validation: check_v1_items passes for this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates (remaining near-duplicate pairs acceptable).

@@ -20784,7 +20784,7 @@ Questions:
 - **variant-analysis-somatic-variant-discovery-q016** — I need to create a small text file containing repeated or structured lines (for example a two-column mapping of sample to group) for downstream processing. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_text_file_with_recurring_lines/9.5+galaxy3
   - Datasets: zenodo.2582555, 2582555):, SLGFSK-N_231335_r1_chr5_12_17.fastq.gz
-- **variant-analysis-somatic-variant-discovery-q017** — I have a mapping file for sample names and want to relabel datasets in my history or collection accordingly. Which Galaxy tool should I use?
+- **variant-analysis-somatic-variant-discovery-q017** — I have a tumor/normal dataset collection and a two-column mapping file with the desired sample identifiers. Which Galaxy tool can relabel the datasets to match that mapping so downstream steps use consistent names?
   - Tools: __RELABEL_FROM_FILE__
   - Datasets: zenodo.2582555, 2582555):, SLGFSK-N_231335_r1_chr5_12_17.fastq.gz
 - **variant-analysis-somatic-variant-discovery-q018** — I need to filter or subset a BAM file (for example keep mapped reads or remove low-quality alignments) for downstream variant calling. Which Galaxy tool should I use?
