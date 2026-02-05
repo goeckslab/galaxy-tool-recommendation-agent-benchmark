@@ -1128,3 +1128,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Falco` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/iuc/falco/falco/1.2.4+galaxy0`, help_len=2592, inputs=9)).
 - Changes: Deleted 8 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
 - Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
+
+## GTX0047 (catalog prune + review; lines 2450-2649)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in `data/benchmark/v1_items.jsonl`, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Bowtie2` via helptext/IO (tool_id `toolshed.g2.bx.psu.edu/repos/devteam/bowtie2/bowtie2/2.5.4+galaxy0`, help_len=20295, inputs=6)).
+- Changes: Deleted 42 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`).
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.
