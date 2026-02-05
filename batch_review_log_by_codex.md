@@ -974,3 +974,11 @@ Notes:
 - Changes: Deleted 46 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`). No new ground-truth alternatives were added.
 - Query hygiene: Rewrote 7 queries to remove exact duplicates after pruning-induced range shifts while keeping intent unchanged (`proteomics-multiGSEA-tutorial-q014`, `proteomics-multiGSEA-tutorial-q021`, `proteomics-multiGSEA-tutorial-q022`, `proteomics-protein-id-sg-ps-q016`, `proteomics-protein-id-sg-ps-q017`, `proteomics-neoantigen-fragpipe-discovery-q016`, `proteomics-neoantigen-fusion-database-generation-q016`).
 - Validation: check_v1_items passes for the kept subset in this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates (remaining near-duplicate pairs acceptable).
+
+## GTX0028 (catalog prune + review; lines 5305-5504)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in data/benchmark/v1_items.jsonl, with catalog-based pruning when the referenced tool is missing from the tool universe snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review to validate tool existence and semantics/IO (e.g., checked the OpenMS `IDMapper` tool entry via helptext/IO fields).
+- Changes: Deleted 22 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`). No new ground-truth alternatives were added and no query rewrites were needed in this batch.
+- Validation: check_v1_items passes for the kept subset in this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates (one remaining near-duplicate pair acceptable).

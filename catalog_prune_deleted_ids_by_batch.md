@@ -53,3 +53,28 @@ Each batch is processed manually in review order (200 items per batch target), a
 - proteomics-protein-id-oms-q020
 - proteomics-protein-id-sg-ps-q012
 - proteomics-protein-quant-sil-q011
+
+## GTX0028 (5305-5504)
+
+- proteomics-protein-quant-sil-q014
+- proteomics-protein-quant-sil-q015
+- proteomics-protein-quant-sil-q016
+- proteomics-proteome_annotation-q011
+- proteomics-proteome_annotation-q012
+- proteomics-proteome_annotation-q013
+- proteomics-proteome_annotation-q014
+- proteomics-proteome_annotation-q015
+- proteomics-proteome_annotation-q016
+- proteomics-secretome-prediction-q013
+- proteomics-secretome-prediction-q014
+- sequence-analysis-Manage_AB1_Sanger-q014
+- sequence-analysis-Manage_AB1_Sanger-q018
+- sequence-analysis-Manage_AB1_Sanger-q019
+- sequence-analysis-Manage_AB1_Sanger-q020
+- sequence-analysis-human-reads-removal-q012
+- sequence-analysis-tapscan-streptophyte-algae-q018
+- sequence-analysis-tapscan-streptophyte-algae-q019
+- sequence-analysis-tapscan-streptophyte-algae-q021
+- sequence-analysis-viral_primer_design-q013
+- sequence-analysis-viral_primer_design-q015
+- single-cell-EBI-retrieval-q017

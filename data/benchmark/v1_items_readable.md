@@ -17230,15 +17230,6 @@ Questions:
 - **proteomics-protein-quant-sil-q013** — I have peptide identifications and detected features and need to map the IDs onto the corresponding features to link identifications with quantitative signals. Which Galaxy tool can perform that mapping?
   - Tools: toolshed.g2.bx.psu.edu/repos/galaxyp/openms_idmapper/IDMapper/3.1+galaxy0
   - Datasets: HEK_SILAC-K6R6_ST905_part.mzml, Human_database_including_decoys_%28cRAP_added%29.fasta
-- **proteomics-protein-quant-sil-q014** — I have identification results with ambiguous mappings and need to resolve ID conflicts before downstream protein inference or quantification. Which Galaxy tool can resolve these conflicts?
-  - Tools: toolshed.g2.bx.psu.edu/repos/galaxyp/openms_idconflictresolver/IDConflictResolver/2.6+galaxy0
-  - Datasets: HEK_SILAC-K6R6_ST905_part.mzml, Human_database_including_decoys_%28cRAP_added%29.fasta
-- **proteomics-protein-quant-sil-q015** — After detecting multiplexed features, I need to resolve overlapping isotope patterns into separate quantitative signals for each label channel. Which Galaxy tool can resolve multiplexed features?
-  - Tools: toolshed.g2.bx.psu.edu/repos/galaxyp/openms_multiplexresolver/MultiplexResolver/2.5+galaxy0
-  - Datasets: HEK_SILAC-K6R6_ST905_part.mzml, Human_database_including_decoys_%28cRAP_added%29.fasta
-- **proteomics-protein-quant-sil-q016** — I have peptide-level quantification and identification information and want to compute protein-level abundances and summaries. Which Galaxy tool can quantify proteins from peptide data?
-  - Tools: toolshed.g2.bx.psu.edu/repos/galaxyp/openms_proteinquantifier/ProteinQuantifier/2.6+galaxy0
-  - Datasets: HEK_SILAC-K6R6_ST905_part.mzml, Human_database_including_decoys_%28cRAP_added%29.fasta
 - **proteomics-protein-quant-sil-q017** — Which Galaxy tool detects multiplexed features in LC-MS data for labeled proteomics experiments?
   - Tools: toolshed.g2.bx.psu.edu/repos/galaxyp/openms_featurefindermultiplex/FeatureFinderMultiplex/3.1+galaxy0
   - Datasets: HEK_SILAC-K6R6_ST905_part.mzml, Human_database_including_decoys_%28cRAP_added%29.fasta
@@ -17309,31 +17300,6 @@ Questions:
   - Tools: toolshed.g2.bx.psu.edu/repos/devteam/tabular_to_fasta/tab2fasta/1.1.1, toolshed.g2.bx.psu.edu/repos/devteam/tabular_to_fasta/tab2fasta/1.1.0
   - Datasets: zenodo.1489208
 
-## Annotating a protein list identified by LC-MS/MS experiments (topics/proteomics/tutorials/proteome_annotation)
-- Topic: proteomics
-- Tools: toolshed.g2.bx.psu.edu/repos/proteore/proteore_filter_keywords_values/MQoutputfilter/2019.03.11
-- Datasets (3): Bredberg.txt, Lacombe_2018.txt, Mucilli.txt
-
-Questions:
-- **proteomics-proteome_annotation-q011** — I have a proteomics output table and want to keep rows that match certain keywords and numeric thresholds. Which Galaxy tool can do this combined filtering?
-  - Tools: toolshed.g2.bx.psu.edu/repos/proteore/proteore_filter_keywords_values/MQoutputfilter/2019.03.11
-  - Datasets: Lacombe_2018.txt, Bredberg.txt, Mucilli.txt
-- **proteomics-proteome_annotation-q012** — I have a list of protein identifiers in one namespace and need to convert them to another identifier system for downstream pathway analysis. Which Galaxy tool can convert protein IDs?
-  - Tools: toolshed.g2.bx.psu.edu/repos/proteore/proteore_id_converter/IDconverter/2019.03.07
-  - Datasets: Lacombe_2018.txt, Bredberg.txt, Mucilli.txt
-- **proteomics-proteome_annotation-q013** — I want to integrate RNA-seq expression information into a proteomics-centric analysis by attaching expression-based abundance fields to a protein list. Which Galaxy tool can generate expression-derived protein abundance data?
-  - Tools: toolshed.g2.bx.psu.edu/repos/proteore/proteore_expression_rnaseq_abbased/rna_abbased_data/2019.03.07
-  - Datasets: Lacombe_2018.txt, Bredberg.txt, Mucilli.txt
-- **proteomics-proteome_annotation-q014** — I need to filter a quantitative proteomics results table by both text keywords and numeric cutoffs to produce a cleaned table for downstream analysis. What Galaxy tool can do this?
-  - Tools: toolshed.g2.bx.psu.edu/repos/proteore/proteore_filter_keywords_values/MQoutputfilter/2019.03.11
-  - Datasets: Lacombe_2018.txt, Bredberg.txt, Mucilli.txt
-- **proteomics-proteome_annotation-q015** — Which Galaxy tool should I use to run pathway enrichment analysis against a Reactome pathway database for a list of proteins?
-  - Tools: toolshed.g2.bx.psu.edu/repos/proteore/proteore_reactome/reactome_analysis/2019.03.05
-  - Datasets: Lacombe_2018.txt, Bredberg.txt, Mucilli.txt
-- **proteomics-proteome_annotation-q016** — Which Galaxy tool can create a Venn diagram to compare overlaps between multiple protein or gene lists?
-  - Tools: toolshed.g2.bx.psu.edu/repos/proteore/proteore_venn_diagram/Jvenn/2019.02.21
-  - Datasets: Lacombe_2018.txt, Bredberg.txt, Mucilli.txt
-
 ## Secretome Prediction (topics/proteomics/tutorials/secretome-prediction)
 - Topic: proteomics
 - Tools: upload1
@@ -17345,12 +17311,6 @@ Questions:
   - Datasets: Sigloch_secretome_list.tabular, goa_human.gaf.gz, go.obo
 - **proteomics-secretome-prediction-q012** — I have two tabular files with a shared key column and want to join them into a single table to add annotations to a results file. Which Galaxy tool can join tables?
   - Tools: toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_easyjoin_tool/9.5+galaxy2, toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_easyjoin_tool/1.0.0
-  - Datasets: Sigloch_secretome_list.tabular, goa_human.gaf.gz, go.obo
-- **proteomics-secretome-prediction-q013** — Which Galaxy tool predicts subcellular localization of proteins from their amino acid sequences?
-  - Tools: toolshed.g2.bx.psu.edu/repos/peterjc/tmhmm_and_signalp/wolf_psort/0.0.8
-  - Datasets: Sigloch_secretome_list.tabular, goa_human.gaf.gz, go.obo
-- **proteomics-secretome-prediction-q014** — Which Galaxy tool removes duplicate lines from a dataset to produce a list of unique entries?
-  - Tools: toolshed.g2.bx.psu.edu/repos/bgruening/unique/bg_uniq/0.3
   - Datasets: Sigloch_secretome_list.tabular, goa_human.gaf.gz, go.obo
 - **proteomics-secretome-prediction-q015** — What Galaxy tool should I run to apply a simple column-based filter to a tabular dataset?
   - Tools: Filter1
@@ -17371,9 +17331,6 @@ Questions:
 - **sequence-analysis-Manage_AB1_Sanger-q013** — I have nucleotide sequences and need their reverse complements for downstream processing. Which Galaxy tool can generate reverse-complement sequences?
   - Tools: toolshed.g2.bx.psu.edu/repos/devteam/fastx_reverse_complement/cshl_fastx_reverse_complement/1.0.2+galaxy2, toolshed.g2.bx.psu.edu/repos/devteam/fastx_reverse_complement/cshl_fastx_reverse_complement/1.0.2+galaxy0
   - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
-- **sequence-analysis-Manage_AB1_Sanger-q014** — I have Sanger sequencing chromatogram files and want to convert them into FASTQ reads for downstream trimming and alignment. Which Galaxy tool can convert chromatograms to FASTQ?
-  - Tools: toolshed.g2.bx.psu.edu/repos/ecology/ab1_fastq_converter/ab1_fastq_converter/1.20.0
-  - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
 - **sequence-analysis-Manage_AB1_Sanger-q015** — I have FASTQ reads and want to trim low-quality bases from read ends before downstream analysis. Which Galaxy tool can trim reads by quality?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/seqtk/seqtk_trimfq/1.5+galaxy0, toolshed.g2.bx.psu.edu/repos/iuc/seqtk/seqtk_trimfq/1.3.1
   - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
@@ -17382,15 +17339,6 @@ Questions:
   - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
 - **sequence-analysis-Manage_AB1_Sanger-q017** — Which Galaxy tool converts sequencing reads from FASTQ to FASTA format?
   - Tools: toolshed.g2.bx.psu.edu/repos/devteam/fastq_to_fasta/cshl_fastq_to_fasta/1.0.2+galaxy2
-  - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
-- **sequence-analysis-Manage_AB1_Sanger-q018** — Which Galaxy tool should I use to align 16S rRNA sequences as part of a QIIME-based amplicon analysis workflow?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/qiime_align_seqs/qiime_align_seqs/1.9.1.0
-  - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
-- **sequence-analysis-Manage_AB1_Sanger-q019** — Which Galaxy tool generates a consensus sequence from a multiple sequence alignment?
-  - Tools: toolshed.g2.bx.psu.edu/repos/ecology/aligned_to_consensus/aligned_to_consensus/1.0.0
-  - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
-- **sequence-analysis-Manage_AB1_Sanger-q020** — In Galaxy, what tool aligns representative sequences for a QIIME amplicon pipeline?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/qiime_align_seqs/qiime_align_seqs/1.9.1.0
   - Datasets: AOPEP_and_CHD8_sequences_20220907.zip
 - **sequence-analysis-Manage_AB1_Sanger-q021** — Which Galaxy tool should I use to run a nucleotide BLAST search to identify an unknown DNA sequence against a reference database?
   - Tools: toolshed.g2.bx.psu.edu/repos/devteam/ncbi_blast_plus/ncbi_blastn_wrapper/2.16.0+galaxy0, toolshed.g2.bx.psu.edu/repos/devteam/ncbi_blast_plus/ncbi_blastn_wrapper/2.10.1+galaxy2
@@ -17404,9 +17352,6 @@ Questions:
 Questions:
 - **sequence-analysis-human-reads-removal-q011** — I have files on my computer that I want as datasets in Galaxy for downstream tools. Which Galaxy tool handles the upload step?
   - Tools: upload1
-  - Datasets: SRR10903401_r1.fq.gz, SRR10903401_r2.fq.gz, SRR10903402_r1.fq.gz, SRR10903402_r2.fq.gz
-- **sequence-analysis-human-reads-removal-q012** — I have multiple datasets and want to create a list collection in Galaxy so I can run a tool or workflow across all of them. Which Galaxy tool builds a list collection?
-  - Tools: collections_build_list
   - Datasets: SRR10903401_r1.fq.gz, SRR10903401_r2.fq.gz, SRR10903402_r1.fq.gz, SRR10903402_r2.fq.gz
 - **sequence-analysis-human-reads-removal-q013** — I have paired-end sequencing reads and need to trim adapters and low-quality bases before mapping. Which Galaxy tool should I use for read trimming?
   - Tools: toolshed.g2.bx.psu.edu/repos/pjbriggs/trimmomatic/trimmomatic/0.39+galaxy2, toolshed.g2.bx.psu.edu/repos/pjbriggs/trimmomatic/trimmomatic/0.38.0
@@ -17679,17 +17624,8 @@ Questions:
 - **sequence-analysis-tapscan-streptophyte-algae-q017** — I have a set of nucleotide or protein sequences and want to create a multiple sequence alignment for downstream phylogenetic analysis. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/rnateam/mafft/rbc_mafft/7.526+galaxy2, toolshed.g2.bx.psu.edu/repos/rnateam/mafft/rbc_mafft/7.526+galaxy1
   - Datasets:  (e.g. `ARATH.fa`, `CHABR.fa`, `MARPO.fa`, `PENMA.fa`, `SELMO.fa`, `PHYPAV6.fa`, `ORYSAJA.fa`)
-- **sequence-analysis-tapscan-streptophyte-algae-q018** — I have a multiple sequence alignment and want to trim poorly aligned or gappy regions before building a phylogenetic tree. Which Galaxy tool can trim an alignment?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/trimal/trimal/1.5.0+galaxy1
-  - Datasets:  (e.g. `ARATH.fa`, `CHABR.fa`, `MARPO.fa`, `PENMA.fa`, `SELMO.fa`, `PHYPAV6.fa`, `ORYSAJA.fa`)
-- **sequence-analysis-tapscan-streptophyte-algae-q019** — I have a multiple sequence alignment and want a quick approximate phylogenetic tree for exploratory analysis. Which Galaxy tool can build a quick tree?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/quicktree/quicktree/2.5+galaxy0
-  - Datasets:  (e.g. `ARATH.fa`, `CHABR.fa`, `MARPO.fa`, `PENMA.fa`, `SELMO.fa`, `PHYPAV6.fa`, `ORYSAJA.fa`)
 - **sequence-analysis-tapscan-streptophyte-algae-q020** — I have a multiple sequence alignment and want to infer a phylogenetic tree with model selection and branch support. Which Galaxy tool should I use for tree inference?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/iqtree/iqtree/2.4.0+galaxy1, toolshed.g2.bx.psu.edu/repos/iuc/iqtree/iqtree/2.3.6+galaxy0
-  - Datasets:  (e.g. `ARATH.fa`, `CHABR.fa`, `MARPO.fa`, `PENMA.fa`, `SELMO.fa`, `PHYPAV6.fa`, `ORYSAJA.fa`)
-- **sequence-analysis-tapscan-streptophyte-algae-q021** — I have a phylogenetic tree file and want to visualize it interactively and annotate clades. Which Galaxy tool can view and explore trees?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/ete_treeviewer/ete_treeviewer/3.1.3+galaxy0
   - Datasets:  (e.g. `ARATH.fa`, `CHABR.fa`, `MARPO.fa`, `PENMA.fa`, `SELMO.fa`, `PHYPAV6.fa`, `ORYSAJA.fa`)
 
 ## Primer and primer scheme design for pan-specific detection and sequencing of viral pathogens across genotypes (topics/sequence-analysis/tutorials/viral_primer_design)
@@ -17704,14 +17640,8 @@ Questions:
 - **sequence-analysis-viral_primer_design-q012** — Which Galaxy tool performs multiple sequence alignment for a set of sequences?
   - Tools: toolshed.g2.bx.psu.edu/repos/rnateam/mafft/rbc_mafft/7.526+galaxy2, toolshed.g2.bx.psu.edu/repos/rnateam/mafft/rbc_mafft/7.526+galaxy1
   - Datasets: 14845698 (plus Polio alignments from GitHub raw links in the tutorial, and `entero_genomes.fasta` for off-target background)
-- **sequence-analysis-viral_primer_design-q013** — I have a viral genome alignment and want to design primer schemes that cover the genome while accounting for variation. Which Galaxy tool can design tiled amplicon primers?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/varvamp/varvamp/1.2.2+galaxy0
-  - Datasets: 14845698 (plus Polio alignments from GitHub raw links in the tutorial, and `entero_genomes.fasta` for off-target background)
 - **sequence-analysis-viral_primer_design-q014** — I have a FASTA reference database and need to build a BLAST database in Galaxy so I can run sequence similarity searches against it. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/devteam/ncbi_blast_plus/ncbi_makeblastdb/2.16.0+galaxy0, toolshed.g2.bx.psu.edu/repos/devteam/ncbi_blast_plus/ncbi_makeblastdb/2.14.1+galaxy2
-  - Datasets: 14845698 (plus Polio alignments from GitHub raw links in the tutorial, and `entero_genomes.fasta` for off-target background)
-- **sequence-analysis-viral_primer_design-q015** — I’m designing primers for targeted sequencing of a virus and need a tool that proposes primer sets robust to observed mutations. Which Galaxy tool should I use?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/varvamp/varvamp/1.2.2+galaxy0
   - Datasets: 14845698 (plus Polio alignments from GitHub raw links in the tutorial, and `entero_genomes.fasta` for off-target background)
 
 ## Importing files from public atlases (topics/single-cell/tutorials/EBI-retrieval)
@@ -17737,9 +17667,6 @@ Questions:
   - Datasets: EBI Single Cell Expression Atlas `E-MTAB-6945`, and Human Cell Atlas project `Single cell transcriptome analysis of human pancreas`
 - **single-cell-EBI-retrieval-q016** — Which Galaxy tool performs basic operations on AnnData objects (e.g., selecting layers/fields or modifying annotations) for single-cell workflows?
   - Tools: toolshed.g2.bx.psu.edu/repos/ebi-gxa/anndata_ops/anndata_ops/1.9.3+galaxy1, toolshed.g2.bx.psu.edu/repos/ebi-gxa/anndata_ops/anndata_ops/1.9.3+galaxy0
-  - Datasets: EBI Single Cell Expression Atlas `E-MTAB-6945`, and Human Cell Atlas project `Single cell transcriptome analysis of human pancreas`
-- **single-cell-EBI-retrieval-q017** — I want to download a single-cell count matrix from the Human Cell Atlas into Galaxy for analysis. Which Galaxy tool can download HCA matrices?
-  - Tools: toolshed.g2.bx.psu.edu/repos/ebi-gxa/hca_matrix_downloader/hca_matrix_downloader/v0.0.4+galaxy0
   - Datasets: EBI Single Cell Expression Atlas `E-MTAB-6945`, and Human Cell Atlas project `Single cell transcriptome analysis of human pancreas`
 - **single-cell-EBI-retrieval-q018** — I need to convert a single-cell dataset between common formats (for example, AnnData to another single-cell file format) for compatibility with downstream tools. Which Galaxy tool can convert single-cell formats?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/sceasy_convert/sceasy_convert/0.0.7+galaxy2
