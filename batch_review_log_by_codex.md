@@ -1024,3 +1024,11 @@ Notes:
 - Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review to validate tool existence and semantics/IO (e.g., checked the FastQC tool entry via helptext/IO fields).
 - Changes: Reviewed all 47 items; no items required catalog-based deletion in this range, and no query rewrites or new ground-truth alternatives were added.
 - Validation: check_v1_items passes for this range (WARN-only for core/internal ids); smell scan reports no hits/duplicates/near-duplicates.
+
+## GTX0034 (catalog prune + review; lines 1-200)
+
+- Date: 2026-02-05
+- Scope: Manual per-item review for 200 items in data/benchmark/v1_items.jsonl, deleting items whose referenced tool is missing from the tool catalog snapshot.
+- Review note: Consulted `data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl` during review (example: checked `Collapse Collection` via helptext/IO fields).
+- Changes: Deleted 7 items in this range because `tools[0]` and/or `metadata.tool_focus` could not be found in the catalog snapshot (IDs recorded in `catalog_prune_deleted_ids_by_batch.md`). No query rewrites or new ground-truth alternatives were added.
+- Validation: Re-exported `data/benchmark/v1_items_readable.md` after pruning.

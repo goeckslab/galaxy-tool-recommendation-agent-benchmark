@@ -188,9 +188,6 @@ Questions:
 - **assembly-assembly-quality-control-q014** — I have k-mers from reads and an assembly, and I want k-mer-based estimates of consensus quality (QV) and completeness. Which Galaxy tool should I use to compute these k-mer-based assembly metrics?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/merqury/merqury/1.3+galaxy4
   - Datasets: 6947782, 5702408, GCA_000146045.2_genomic.fna
-- **assembly-assembly-quality-control-q015** — I want to compare two genome assemblies by visualizing large-scale similarity/rearrangements in a dotplot-style view. Which Galaxy tool can generate this kind of whole-genome comparison plot?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/chromeister/chromeister/1.5.a+galaxy1
-  - Datasets: 6947782, 5702408, GCA_000146045.2_genomic.fna
 - **assembly-assembly-quality-control-q016** — I need an assembly quality report with summary statistics and misassembly indicators to help choose between candidate assemblies. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/quast/quast/5.3.0+galaxy1
   - Datasets: 6947782, 5702408, GCA_000146045.2_genomic.fna
@@ -202,9 +199,6 @@ Questions:
   - Datasets: 6947782, 5702408, GCA_000146045.2_genomic.fna
 - **assembly-assembly-quality-control-q019** — Using read-derived k-mers, I want k-mer-based assembly quality metrics like QV and completeness for my genome assembly. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/merqury/merqury/1.3+galaxy4
-  - Datasets: 6947782, 5702408, GCA_000146045.2_genomic.fna
-- **assembly-assembly-quality-control-q020** — I need a whole-genome comparison visualization to spot large inversions or rearrangements between an assembly and a reference. Which Galaxy tool can produce a genome-to-genome dotplot image?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/chromeister/chromeister/1.5.a+galaxy1
   - Datasets: 6947782, 5702408, GCA_000146045.2_genomic.fna
 
 ## Unicycler assembly of SARS-CoV-2 genome with preprocessing to remove human genome reads (topics/assembly/tutorials/assembly-with-preprocessing)
@@ -486,9 +480,6 @@ Questions:
 - **assembly-ecoli_comparison-q022** — I have several intermediate tabular/text outputs from genome comparisons and want to concatenate them into one file for downstream processing. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_cat/9.5+galaxy2, cat1
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
-- **assembly-ecoli_comparison-q023** — I have two tabular datasets with the same number of rows and want to combine them side-by-side by merging columns. Which Galaxy tool should I use to merge columns?
-  - Tools: toolshed.g2.bx.psu.edu/repos/devteam/merge_cols/mergeCols1/1.0.1
-  - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
 - **assembly-ecoli_comparison-q024** — I need to concatenate multiple text datasets into one combined file as part of building a summary table. Which Galaxy tool should I use?
   - Tools: cat1, toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_cat/9.5+galaxy2
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
@@ -516,9 +507,6 @@ Questions:
 - **assembly-ecoli_comparison-q032** — I have whole-genome alignments and want to convert them into link tracks suitable for a circular genome comparison plot. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/circos/circos_aln_to_links/0.69.8+galaxy7
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
-- **assembly-ecoli_comparison-q033** — I have a set of genomic intervals and want to format them as tile tracks for a circular genome visualization. Which Galaxy tool should I use?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/circos/circos_interval_to_tiles/0.69.8+galaxy7
-  - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
 - **assembly-ecoli_comparison-q034** — I want a circular ideogram-style plot to visualize rearrangements between genomes using link and tile tracks. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/circos/circos/0.69.8+galaxy7
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
@@ -530,9 +518,6 @@ Questions:
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
 - **assembly-ecoli_comparison-q037** — From a large results table, I want to keep only rows for a small set of selected genome accessions. Which Galaxy tool should I use for pattern-based row selection?
   - Tools: Grep1, toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_grep_tool/9.5+galaxy2
-  - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
-- **assembly-ecoli_comparison-q038** — I have a table of genome download locations and want to turn it into a structured Galaxy upload as collections using rule-based mapping (URLs + names). Which Galaxy tool should I use?
-  - Tools: Rules
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
 - **assembly-ecoli_comparison-q039** — Before visualization, I need to ensure my BED intervals are coordinate-sorted (chromosome and start) for compatibility with downstream tools. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_sortbed/2.31.1+galaxy0
@@ -573,9 +558,6 @@ Questions:
 - **assembly-ecoli_comparison-q051** — I have multiple intermediate tabular outputs and want to concatenate them into one dataset for downstream processing. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_cat/9.5+galaxy2, cat1
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
-- **assembly-ecoli_comparison-q052** — I have two tables with matching row order and want to combine them by appending columns side-by-side. Which Galaxy tool should I use?
-  - Tools: toolshed.g2.bx.psu.edu/repos/devteam/merge_cols/mergeCols1/1.0.1
-  - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
 - **assembly-ecoli_comparison-q053** — I have two BED-like datasets and want to concatenate them into a single BED for visualization. Which Galaxy tool should I use?
   - Tools: cat1, toolshed.g2.bx.psu.edu/repos/bgruening/text_processing/tp_cat/9.5+galaxy2
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
@@ -602,9 +584,6 @@ Questions:
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
 - **assembly-ecoli_comparison-q061** — I have genome-to-genome alignments and need to reformat them into a links file for a circular comparison visualization. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/circos/circos_aln_to_links/0.69.8+galaxy7
-  - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
-- **assembly-ecoli_comparison-q062** — I have interval tracks (e.g., deletions) and want to convert them into tiles for a circular genome visualization. Which Galaxy tool should I use?
-  - Tools: toolshed.g2.bx.psu.edu/repos/iuc/circos/circos_interval_to_tiles/0.69.8+galaxy7
   - Datasets: 3382053, genomes_proks.txt, GCA_000005845.2_ASM584v2, 1306128
 - **assembly-ecoli_comparison-q063** — I want a circular plot that combines links and tiles to visualize inversions and deletions between genomes. Which Galaxy tool should I use?
   - Tools: toolshed.g2.bx.psu.edu/repos/iuc/circos/circos/0.69.8+galaxy7

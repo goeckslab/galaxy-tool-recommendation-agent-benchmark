@@ -78,3 +78,13 @@ Each batch is processed manually in review order (200 items per batch target), a
 - sequence-analysis-viral_primer_design-q013
 - sequence-analysis-viral_primer_design-q015
 - single-cell-EBI-retrieval-q017
+
+## GTX0034 (1-200)
+
+- assembly-assembly-quality-control-q015
+- assembly-assembly-quality-control-q020
+- assembly-ecoli_comparison-q023
+- assembly-ecoli_comparison-q033
+- assembly-ecoli_comparison-q038
+- assembly-ecoli_comparison-q052
+- assembly-ecoli_comparison-q062
