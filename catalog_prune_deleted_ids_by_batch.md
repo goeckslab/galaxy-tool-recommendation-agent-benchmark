@@ -149,3 +149,22 @@ Each batch is processed manually in review order (200 items per batch target), a
 - computational-chemistry-covid19-docking-q040
 - computational-chemistry-covid19-docking-q041
 - computational-chemistry-covid19-docking-q042
+
+## GTX0038 (742-941)
+
+- computational-chemistry-md-simulation-namd-q011
+- computational-chemistry-md-simulation-namd-q012
+- computational-chemistry-md-simulation-namd-q013
+- computational-chemistry-md-simulation-namd-q014
+- computational-chemistry-md-simulation-namd-q015
+- computational-chemistry-md-simulation-namd-q016
+- computational-chemistry-md-simulation-namd-q017
+- computational-chemistry-md-simulation-namd-q018
+- computational-chemistry-md-simulation-namd-q019
+- computational-chemistry-md-simulation-namd-q020
+- computational-chemistry-md-simulation-namd-q021
+- computational-chemistry-md-simulation-namd-q022
+- computational-chemistry-md-simulation-namd-q023
+- computational-chemistry-md-simulation-namd-q024
+- computational-chemistry-md-simulation-namd-q025
+- computational-chemistry-md-simulation-namd-q026
