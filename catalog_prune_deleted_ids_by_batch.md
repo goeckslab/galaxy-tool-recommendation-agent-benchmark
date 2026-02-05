@@ -88,3 +88,19 @@ Each batch is processed manually in review order (200 items per batch target), a
 - assembly-ecoli_comparison-q038
 - assembly-ecoli_comparison-q052
 - assembly-ecoli_comparison-q062
+
+## GTX0035 (194-393)
+
+- assembly-largegenome-q025
+- assembly-metagenomics-assembly-q034
+- assembly-mrsa-nanopore-q021
+- assembly-mrsa-nanopore-q032
+- assembly-vgp_genome_assembly-q056
+- assembly-vgp_genome_assembly-q058
+- climate-argo_pangeo-q011
+- climate-argo_pangeo-q014
+- climate-argo_pangeo-q015
+- climate-argo_pangeo-q016
+- climate-argo_pangeo-q019
+- climate-climate-101-q017
+- climate-climate-101-q022
