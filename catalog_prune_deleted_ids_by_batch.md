@@ -317,3 +317,16 @@ Each batch is processed manually in review order (200 items per batch target), a
 - genome-annotation-bacterial-pangenomics-q018
 - genome-annotation-bacterial-pangenomics-q019
 - genome-annotation-bacterial-pangenomics-q020
+
+## GTX0048 (2608-2807)
+
+- genome-annotation-bacterial-pangenomics-q021
+- genome-annotation-bacterial-pangenomics-q022
+- genome-annotation-braker3-q035
+- genome-annotation-braker3-q036
+- genome-annotation-braker3-q037
+- genome-annotation-braker3-q038
+- genome-annotation-comparison-braker-helixer-annotation-q039
+- genome-annotation-comparison-braker-helixer-annotation-q040
+- genome-annotation-comparison-braker-helixer-annotation-q041
+- genome-annotation-comparison-braker-helixer-annotation-q042
