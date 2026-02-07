@@ -65,6 +65,20 @@ Tab-separated file with columns:
 - `tool_id` - Unique tool identifier
 - `help_text` - Full help text from the tool wrapper
 
+## Merge into tool catalog (recommended)
+
+To enrich the repo’s tool catalog JSONL with help text (so retrieval/expansion workflows can use it):
+
+```bash
+python3 -m scripts.helptext_analysis.merge_helptext_into_tool_catalog \
+  --helptext-tsv scripts/helptext_analysis/data/tools_helptext.tsv \
+  --catalog-jsonl data/tool_catalog/usegalaxy_org_all_tools.jsonl \
+  --output-jsonl data/tool_catalog/usegalaxy_org_all_tools_with_helptext.jsonl \
+  --overwrite
+```
+
+The merged field name in the output JSONL is `tool_help_text`.
+
 ## Notes
 
 - The script processes tools sequentially to avoid overloading the server

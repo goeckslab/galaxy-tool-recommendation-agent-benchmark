@@ -54,8 +54,12 @@ def load_jsonl(path: Path) -> List[Dict[str, Any]]:
 
 def normalize_tool_id(tool_id: str) -> str:
     if tool_id.startswith("toolshed.g2.bx.psu.edu/"):
+        # Toolshed tool IDs are typically:
+        # toolshed.g2.bx.psu.edu/repos/<owner>/<repo>/<tool>/<version>
+        # We only drop the *version* segment when it is present; some agents may already
+        # return the base tool ID without a version, and we must not truncate it further.
         parts = tool_id.split("/")
-        if len(parts) >= 2:
+        if len(parts) >= 6 and parts[1] == "repos":
             return "/".join(parts[:-1])
     return tool_id
 

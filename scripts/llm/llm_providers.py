@@ -78,6 +78,7 @@ def call_openai_compatible(
     model: str,
     messages: List[Dict[str, str]],
     temperature: float,
+    response_format: Optional[Dict[str, Any]] = None,
     timeout: int = 60,
     max_retries: int = 3,
 ) -> LLMResponse:
@@ -90,6 +91,8 @@ def call_openai_compatible(
         "messages": messages,
         "temperature": temperature,
     }
+    if response_format is not None:
+        payload["response_format"] = response_format
     raw = _post_with_retries(api_url, payload, headers, timeout=timeout, max_retries=max_retries)
     choices = raw.get("choices") or []
     if not choices:

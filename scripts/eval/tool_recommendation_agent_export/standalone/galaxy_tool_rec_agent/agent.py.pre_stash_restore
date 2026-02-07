@@ -1,0 +1,662 @@
+"""
+Standalone wrapper around Galaxy's tool recommendation agent prompt.
+
+Goal: make the prompt + tool-calling logic easy to reuse in a benchmark repo
+without importing the full Galaxy codebase.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import logging
+import re
+from dataclasses import dataclass
+from pathlib import Path
+from typing import (
+    Any,
+    Literal,
+    Optional,
+    Protocol,
+)
+import json
+
+from pydantic import BaseModel
+from pydantic_ai import Agent
+from pydantic_ai.tools import RunContext
+
+log = logging.getLogger(__name__)
+
+ConfidenceLiteral = Literal["low", "medium", "high"]
+
+_TOKEN_RE = re.compile(r"[a-zA-Z0-9_:+\\-]{2,}")
+
+
+class ToolRecommendationResult(BaseModel):
+    """
+    Structured result compatible with Galaxy's prompt intent.
+
+    Tools are represented as dicts so that benchmark harnesses can carry extra fields.
+    Expected keys (recommended): id, name, description, category.
+    """
+
+    primary_tools: list[dict[str, Any]]
+    alternative_tools: list[dict[str, Any]] = []
+    workflow_suggestion: Optional[str] = None
+    parameter_guidance: dict[str, Any] = {}
+    confidence: ConfidenceLiteral
+    reasoning: str
+    search_keywords: list[str] = []
+
+
+class ToolCatalog(Protocol):
+    def search(self, query: str, limit: int = 20) -> list[dict[str, Any]]: ...
+
+    def get(self, tool_id: str) -> Optional[dict[str, Any]]: ...
+
+    def categories(self) -> list[str]: ...
+
+
+@dataclass(frozen=True)
+class GalaxyToolSearchConfig:
+    """
+    Approximate Galaxy defaults from `config_schema.yml` for toolbox search scoring.
+
+    This is not a byte-for-byte reimplementation of Whoosh scoring, but it mirrors:
+    - field inclusion (id/name/description/section/help/labels/stub)
+    - relative boosts
+    - exact-match multiplier
+    - ngram-like partial-match factor
+    """
+
+    tool_name_boost: float = 20.0
+    tool_name_exact_multiplier: float = 10.0
+    tool_id_boost: float = 20.0
+    tool_section_boost: float = 3.0
+    tool_description_boost: float = 8.0
+    tool_label_boost: float = 1.0
+    tool_stub_boost: float = 2.0
+    tool_help_boost: float = 1.0
+    tool_help_bm25f_k1: float = 0.5
+    tool_enable_ngram_search: bool = True
+    tool_ngram_minsize: int = 3
+    tool_ngram_maxsize: int = 4
+    tool_ngram_factor: float = 0.2
+
+
+class InMemoryToolCatalog:
+    """
+    In-memory catalog with Galaxy-like scoring over common tool fields.
+
+    Expected tool dict keys (best effort):
+    - id (required for returning results)
+    - name
+    - description
+    - category / section
+    - help / helptext / raw_help
+    - labels (list[str] or space-separated str)
+    - guid OR (owner, repository) for stub parsing
+    """
+
+    def __init__(self, tools: list[dict[str, Any]], *, search_config: Optional[GalaxyToolSearchConfig] = None):
+        self._tools = tools
+        self._by_id = {t.get("id"): t for t in tools if t.get("id")}
+        self._cfg = search_config or GalaxyToolSearchConfig()
+
+    def search(self, query: str, limit: int = 20) -> list[dict[str, Any]]:
+        query = (query or "").strip()
+        if not query:
+            return []
+
+        tokens = _tokenize(query)
+        query_norm = _normalize_query(query)
+        if not tokens and not query_norm:
+            return []
+
+        scored: list[tuple[float, dict[str, Any]]] = []
+        for tool in self._tools:
+            tool_id = str(tool.get("id", "") or "").strip()
+            if not tool_id:
+                continue
+            score = _score_tool(query_norm, tokens, tool, self._cfg)
+            if score > 0:
+                scored.append((score, tool))
+
+        scored.sort(key=lambda x: x[0], reverse=True)
+        return [t for _, t in scored[:limit]]
+
+    def all_tools(self) -> list[dict[str, Any]]:
+        return list(self._tools)
+
+    def get(self, tool_id: str) -> Optional[dict[str, Any]]:
+        return self._by_id.get(tool_id)
+
+    def categories(self) -> list[str]:
+        cats = set()
+        for t in self._tools:
+            cat = str(t.get("category", "") or t.get("section", "") or "").strip()
+            if cat:
+                cats.add(cat)
+        return sorted(c for c in cats if c)
+
+
+class JsonlToolCatalog(InMemoryToolCatalog):
+    """Load a tool catalog from a JSONL file (one JSON object per line)."""
+
+    @classmethod
+    def from_path(
+        cls,
+        jsonl_path: str | Path,
+        *,
+        search_config: Optional[GalaxyToolSearchConfig] = None,
+        max_tools: Optional[int] = None,
+    ) -> "JsonlToolCatalog":
+        path = Path(jsonl_path)
+        tools: list[dict[str, Any]] = []
+        with path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                raw = json.loads(line)
+                tools.append(_normalize_benchmark_tool(raw))
+                if max_tools is not None and len(tools) >= max_tools:
+                    break
+        return cls(tools, search_config=search_config)
+
+
+class WhooshToolCatalog:
+    """
+    Tool catalog that mirrors Galaxy's `trans.app.toolbox_search` behavior using Whoosh.
+
+    This is the closest you can get to Galaxy's search semantics outside Galaxy, but it
+    requires installing the `whoosh` package.
+    """
+
+    def __init__(
+        self,
+        tools: list[dict[str, Any]],
+        *,
+        index_dir: str | Path,
+        search_config: Optional[GalaxyToolSearchConfig] = None,
+        index_help: bool = True,
+    ):
+        self._cfg = search_config or GalaxyToolSearchConfig()
+        self._tools = tools
+        self._by_id = {t.get("id"): t for t in tools if t.get("id")}
+        self._index_dir = Path(index_dir)
+        self._index_help = index_help
+
+        try:
+            from whoosh import analysis, index  # type: ignore
+            from whoosh.fields import ID, KEYWORD, NGRAMWORDS, Schema, TEXT  # type: ignore
+        except Exception as e:  # pragma: no cover
+            raise RuntimeError(
+                "WhooshToolCatalog requires the `whoosh` package. Install it in the benchmark env (e.g. `pip install whoosh`)."
+            ) from e
+
+        self._analysis = analysis
+        self._index_mod = index
+        self._Schema = Schema
+        self._ID = ID
+        self._TEXT = TEXT
+        self._KEYWORD = KEYWORD
+        self._NGRAMWORDS = NGRAMWORDS
+
+        self._rex = analysis.RegexTokenizer()
+        self._schema = self._build_schema()
+        self._index = self._open_or_create_index()
+        self._build_index()
+
+    def _build_schema(self):
+        cfg = self._cfg
+        analysis = self._analysis
+        Schema = self._Schema
+        ID = self._ID
+        TEXT = self._TEXT
+        KEYWORD = self._KEYWORD
+        NGRAMWORDS = self._NGRAMWORDS
+
+        schema_conf: dict[str, Any] = {
+            # Stored, not searchable
+            "id": ID(stored=True, unique=True),
+            # Galaxy uses NGRAMWORDS for id_exact with a comment "exact match only";
+            # we mirror the schema structure, even though the analyzer isn't strictly IDTokenizer.
+            "id_exact": NGRAMWORDS(
+                minsize=cfg.tool_ngram_minsize,
+                maxsize=cfg.tool_ngram_maxsize,
+                field_boost=(cfg.tool_id_boost * cfg.tool_name_exact_multiplier),
+            ),
+            "name_exact": TEXT(
+                field_boost=(cfg.tool_name_boost * cfg.tool_name_exact_multiplier),
+                analyzer=analysis.IDTokenizer() | analysis.LowercaseFilter(),
+            ),
+            "stub": KEYWORD(field_boost=float(cfg.tool_stub_boost)),
+            "section": TEXT(field_boost=float(cfg.tool_section_boost)),
+            "edam_operations": TEXT(field_boost=float(cfg.tool_section_boost)),
+            "edam_topics": TEXT(field_boost=float(cfg.tool_section_boost)),
+            "repository": TEXT(field_boost=float(cfg.tool_section_boost)),
+            "owner": TEXT(field_boost=float(cfg.tool_section_boost)),
+            "description": TEXT(field_boost=cfg.tool_description_boost, analyzer=analysis.StemmingAnalyzer()),
+            "help": TEXT(field_boost=cfg.tool_help_boost, analyzer=analysis.StemmingAnalyzer()),
+            "labels": KEYWORD(field_boost=float(cfg.tool_label_boost)),
+        }
+
+        if cfg.tool_enable_ngram_search:
+            schema_conf["name"] = NGRAMWORDS(
+                minsize=cfg.tool_ngram_minsize,
+                maxsize=cfg.tool_ngram_maxsize,
+                field_boost=(float(cfg.tool_name_boost) * cfg.tool_ngram_factor),
+            )
+        else:
+            schema_conf["name"] = TEXT(field_boost=float(cfg.tool_name_boost))
+
+        return Schema(**schema_conf)
+
+    def _open_or_create_index(self):
+        index = self._index_mod
+        self._index_dir.mkdir(parents=True, exist_ok=True)
+        if index.exists_in(str(self._index_dir)):
+            idx = index.open_dir(str(self._index_dir))
+            if idx.schema == self._schema:
+                return idx
+        # (re)create if missing or schema mismatch
+        if any(self._index_dir.iterdir()):
+            for child in self._index_dir.iterdir():
+                if child.is_file():
+                    child.unlink()
+                else:
+                    # best effort; benchmark can use an empty dir for safety
+                    pass
+        return index.create_in(str(self._index_dir), schema=self._schema)
+
+    def _clean(self, s: str) -> str:
+        # Mirrors Galaxy's "clean": remove hyphens because Whoosh treats them as wildcards.
+        if "-" in s:
+            return " ".join(token.text for token in self._rex(s))
+        return s
+
+    def _build_index(self) -> None:
+        try:
+            from whoosh.writing import AsyncWriter  # type: ignore
+        except Exception as e:  # pragma: no cover
+            raise RuntimeError("Missing whoosh.writing.AsyncWriter; ensure whoosh is installed correctly.") from e
+
+        with AsyncWriter(self._index) as writer:
+            for tool in self._tools:
+                tool_id = str(tool.get("id", "") or "").strip()
+                if not tool_id:
+                    continue
+
+                add_doc_kwds: dict[str, Any] = {
+                    "id": tool_id,
+                    "id_exact": tool_id,
+                    "name": self._clean(str(tool.get("name", "") or "")),
+                    "description": str(tool.get("description", "") or ""),
+                    "section": str(tool.get("category", "") or tool.get("section", "") or ""),
+                    "edam_operations": "",
+                    "edam_topics": "",
+                    "repository": "",
+                    "owner": "",
+                    "help": "",
+                    "labels": _as_text(tool.get("labels")),
+                    "stub": _tool_stub_text(tool),
+                    "name_exact": self._clean(str(tool.get("name", "") or "")),
+                }
+
+                if self._index_help:
+                    add_doc_kwds["help"] = _tool_help_text(tool)
+
+                writer.update_document(**add_doc_kwds)
+
+    def search(self, query: str, limit: int = 20) -> list[dict[str, Any]]:
+        try:
+            from whoosh.qparser import MultifieldParser, OrGroup  # type: ignore
+            from whoosh.scoring import BM25F, Frequency, MultiWeighting  # type: ignore
+        except Exception as e:  # pragma: no cover
+            raise RuntimeError("Whoosh search components unavailable; ensure whoosh is installed correctly.") from e
+
+        q = (query or "").strip()
+        if not q:
+            return []
+
+        fields = [
+            "id",
+            "id_exact",
+            "name",
+            "name_exact",
+            "description",
+            "section",
+            "edam_operations",
+            "edam_topics",
+            "repository",
+            "owner",
+            "help",
+            "labels",
+            "stub",
+        ]
+
+        with self._index.searcher(
+            weighting=MultiWeighting(
+                Frequency(),
+                help=BM25F(K1=self._cfg.tool_help_bm25f_k1),
+            )
+        ) as searcher:
+            parser = MultifieldParser(fields, schema=self._schema, group=OrGroup)
+            parsed = parser.parse(q)
+            hits = searcher.search(parsed, limit=None, sortedby="", terms=True)
+            ids = [hit["id"] for hit in hits]
+
+        results = []
+        for tool_id in ids:
+            tool = self._by_id.get(tool_id)
+            if tool:
+                results.append(tool)
+            if len(results) >= limit:
+                break
+        return results
+
+    def get(self, tool_id: str) -> Optional[dict[str, Any]]:
+        return self._by_id.get(tool_id)
+
+    def categories(self) -> list[str]:
+        cats = set()
+        for t in self._tools:
+            cat = str(t.get("category", "") or t.get("section", "") or "").strip()
+            if cat:
+                cats.add(cat)
+        return sorted(cats)
+
+
+@dataclass(frozen=True)
+class StandaloneDeps:
+    tool_catalog: ToolCatalog
+
+
+class ToolRecommendationAgentStandalone:
+    """
+    Standalone tool recommendation agent.
+
+    - Keeps Galaxy's prompt + tool names.
+    - Makes "tool availability" depend on the injected ToolCatalog.
+    """
+
+    def __init__(
+        self,
+        *,
+        model: Any,
+        tool_catalog: ToolCatalog,
+        prompt_path: Optional[Path] = None,
+    ):
+        self._prompt_path = prompt_path or (Path(__file__).parent / "prompts" / "tool_recommendation.md")
+        self._deps = StandaloneDeps(tool_catalog=tool_catalog)
+        self._agent = self._create_agent(model)
+
+    def _create_agent(self, model: Any) -> Agent[StandaloneDeps, Any]:
+        agent: Agent[StandaloneDeps, Any] = Agent(
+            model,
+            deps_type=StandaloneDeps,
+            output_type=ToolRecommendationResult,
+            system_prompt=self._prompt_path.read_text(encoding="utf-8"),
+        )
+
+        @agent.tool
+        async def search_galaxy_tools(ctx: RunContext[StandaloneDeps], query: str) -> str:
+            results = ctx.deps.tool_catalog.search(query, limit=20)
+            if not results:
+                return f"No tools found matching '{query}'"
+
+            formatted = []
+            for tool in results[:10]:
+                desc = str(tool.get("description", "") or "")
+                formatted.append(
+                    f"- ID: {tool.get('id')}, Name: {tool.get('name')}, Description: {desc[:100]}..."
+                )
+            return f"Found {len(results)} tools:\n" + "\n".join(formatted)
+
+        @agent.tool
+        async def get_galaxy_tool_details(ctx: RunContext[StandaloneDeps], tool_id: str) -> str:
+            tool = ctx.deps.tool_catalog.get(tool_id)
+            if not tool:
+                return f"Error: Tool not found (ID: {tool_id})"
+
+            lines = [
+                f"Tool: {tool.get('name', 'unknown')} (ID: {tool.get('id', tool_id)})",
+                f"Description: {tool.get('description', 'No description')}",
+                f"Category: {tool.get('category') or tool.get('section') or 'Uncategorized'}",
+            ]
+
+            # Optional extra fields if the benchmark provides them
+            if tool.get("version"):
+                lines.insert(1, f"Version: {tool.get('version')}")
+            if tool.get("requirements"):
+                reqs = tool.get("requirements") or []
+                if isinstance(reqs, list):
+                    lines.append(f"Requirements: {', '.join(str(r) for r in reqs)}")
+
+            # Best-effort match to Galaxy's "Inputs/Outputs" previews
+            inputs_raw = tool.get("inputs_raw") or tool.get("inputs")
+            if isinstance(inputs_raw, list) and inputs_raw:
+                preview = []
+                for i in inputs_raw[:5]:
+                    if not isinstance(i, dict):
+                        continue
+                    name = i.get("name") or i.get("label") or "input"
+                    typ = i.get("type") or i.get("model_class") or "unknown"
+                    preview.append(f"{name} ({typ})")
+                if preview:
+                    lines.append(f"Inputs: {', '.join(preview)}")
+
+            outputs_raw = tool.get("outputs_raw") or tool.get("outputs")
+            if isinstance(outputs_raw, list) and outputs_raw:
+                preview = []
+                for o in outputs_raw[:5]:
+                    if not isinstance(o, dict):
+                        continue
+                    name = o.get("name") or "output"
+                    fmt = o.get("format") or o.get("datatype") or "unknown"
+                    preview.append(f"{name} ({fmt})")
+                if preview:
+                    lines.append(f"Outputs: {', '.join(preview)}")
+
+            return "\n".join(lines)
+
+        @agent.tool
+        async def get_galaxy_tool_categories(ctx: RunContext[StandaloneDeps]) -> str:
+            cats = ctx.deps.tool_catalog.categories()
+            if not cats:
+                return "No tool categories found"
+            return "Available tool categories:\n" + "\n".join(f"- {c}" for c in cats)
+
+        return agent
+
+    async def recommend(self, query: str, *, context: Optional[dict[str, Any]] = None) -> ToolRecommendationResult | str:
+        enhanced_query = query
+        if context:
+            for k, v in context.items():
+                enhanced_query += f"\n{k}: {v}"
+
+        result = await self._agent.run(enhanced_query, deps=self._deps)
+
+        # pydantic-ai typically returns structured output in .output, with .data as legacy fallback.
+        out = getattr(result, "output", None)
+        if isinstance(out, ToolRecommendationResult):
+            return out
+        data = getattr(result, "data", None)
+        if isinstance(data, ToolRecommendationResult):
+            return data
+        return str(out) if out is not None else str(data) if data is not None else str(result)
+
+    def recommend_sync(self, query: str, *, context: Optional[dict[str, Any]] = None) -> ToolRecommendationResult | str:
+        return asyncio.run(self.recommend(query, context=context))
+
+def _tokenize(text: str) -> list[str]:
+    return [m.group(0).lower() for m in _TOKEN_RE.finditer(text or "")]
+
+
+def _normalize_query(text: str) -> str:
+    return " ".join(_tokenize(text))
+
+
+def _clean_for_exact_name(name: str) -> str:
+    # Mirrors Galaxy's clean() behavior for hyphens in tool search indexing.
+    # We don't replicate Whoosh tokenization; we just ensure hyphens don't block matches.
+    name = (name or "").replace("-", " ")
+    return " ".join(_tokenize(name))
+
+
+def _as_text(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, list):
+        return " ".join(str(v) for v in value)
+    return str(value)
+
+
+def _tool_help_text(tool: dict[str, Any]) -> str:
+    return _as_text(tool.get("help") or tool.get("helptext") or tool.get("raw_help") or tool.get("help_text"))
+
+
+def _tool_section_text(tool: dict[str, Any]) -> str:
+    return _as_text(tool.get("section") or tool.get("category"))
+
+
+def _tool_labels_text(tool: dict[str, Any]) -> str:
+    return _as_text(tool.get("labels"))
+
+
+def _tool_stub_text(tool: dict[str, Any]) -> str:
+    guid = _as_text(tool.get("guid")).strip()
+    if guid:
+        # Galaxy parses owner/repo/tool_id from GUID; we approximate using the last 3 path parts.
+        parts = [p for p in guid.split("/") if p]
+        if len(parts) >= 3:
+            return "/".join(parts[-3:])
+    owner = _as_text(tool.get("owner")).strip()
+    repo = _as_text(tool.get("repository") or tool.get("repo")).strip()
+    tool_id = _as_text(tool.get("id")).strip()
+    if owner and repo and tool_id:
+        return f"{owner}/{repo}/{tool_id}"
+    return tool_id
+
+
+def _normalize_benchmark_tool(raw: dict[str, Any]) -> dict[str, Any]:
+    """
+    Normalize the benchmark JSONL schema to match Galaxy agent expectations.
+
+    Benchmark file example keys:
+    - tool_id, name, description, version, tool_help_text, base_id, inputs_raw, outputs_raw, ...
+
+    We map these to:
+    - id, name, description, version, help, category (best-effort), plus keep originals.
+    """
+    tool_id = raw.get("tool_id") or raw.get("id")
+    name = raw.get("name") or ""
+    description = raw.get("description") or ""
+    version = raw.get("version")
+    help_text = raw.get("tool_help_text") or raw.get("help") or raw.get("help_text") or ""
+    category = raw.get("category") or raw.get("section") or raw.get("panel_section") or raw.get("tool_section") or ""
+
+    normalized = dict(raw)
+    normalized["id"] = tool_id
+    normalized["name"] = name
+    normalized["description"] = description
+    if version is not None:
+        normalized["version"] = version
+    normalized["help"] = help_text
+    # Prefer any provided section/category metadata; otherwise keep empty for parity.
+    normalized["category"] = category or normalized.get("category", "") or ""
+    return normalized
+
+def _contains_any_token(tokens: list[str], haystack: str) -> int:
+    hay = haystack.lower()
+    return sum(1 for t in tokens if t and t in hay)
+
+
+def _bm25_tf(tf: int, k1: float) -> float:
+    # A small BM25-like term-frequency saturation; enough to approximate Galaxy's help weighting intent.
+    if tf <= 0:
+        return 0.0
+    return (tf * (k1 + 1.0)) / (tf + k1)
+
+
+def _ngram_hit(token: str, haystack: str, cfg: GalaxyToolSearchConfig) -> bool:
+    if not cfg.tool_enable_ngram_search:
+        return False
+    tok = token.lower()
+    if len(tok) < cfg.tool_ngram_minsize:
+        return False
+    hay = haystack.lower()
+    min_n = max(1, cfg.tool_ngram_minsize)
+    max_n = max(min_n, cfg.tool_ngram_maxsize)
+    for n in range(min_n, max_n + 1):
+        if len(tok) < n:
+            continue
+        for i in range(0, len(tok) - n + 1):
+            if tok[i : i + n] in hay:
+                return True
+    return False
+
+
+def _score_tool(query_norm: str, tokens: list[str], tool: dict[str, Any], cfg: GalaxyToolSearchConfig) -> float:
+    tool_id = _as_text(tool.get("id")).strip().lower()
+    tool_name = _as_text(tool.get("name")).strip()
+    tool_name_norm = _clean_for_exact_name(tool_name)
+    tool_desc = _as_text(tool.get("description"))
+    tool_section = _tool_section_text(tool)
+    tool_help = _tool_help_text(tool)
+    tool_labels = _tool_labels_text(tool)
+    tool_stub = _tool_stub_text(tool)
+
+    score = 0.0
+
+    # ID exact-ish and partial matches
+    if query_norm and tool_id:
+        if query_norm == tool_id:
+            score += cfg.tool_id_boost * cfg.tool_name_exact_multiplier
+        else:
+            hits = _contains_any_token(tokens, tool_id)
+            if hits:
+                score += hits * cfg.tool_id_boost * cfg.tool_ngram_factor
+
+    # Name exact and partial matches (hyphen-insensitive)
+    if query_norm and tool_name_norm:
+        if query_norm == tool_name_norm:
+            score += cfg.tool_name_boost * cfg.tool_name_exact_multiplier
+        else:
+            hits = _contains_any_token(tokens, tool_name_norm)
+            if hits:
+                score += hits * cfg.tool_name_boost
+            # ngram-like fallback for spelling/substring tolerance
+            for t in tokens:
+                if _ngram_hit(t, tool_name_norm, cfg):
+                    score += cfg.tool_name_boost * cfg.tool_ngram_factor
+
+    # Description / section / labels / stub
+    desc_hits = _contains_any_token(tokens, tool_desc)
+    if desc_hits:
+        score += desc_hits * cfg.tool_description_boost
+
+    section_hits = _contains_any_token(tokens, tool_section)
+    if section_hits:
+        score += section_hits * cfg.tool_section_boost
+
+    label_hits = _contains_any_token(tokens, tool_labels)
+    if label_hits:
+        score += label_hits * cfg.tool_label_boost
+
+    stub_hits = _contains_any_token(tokens, tool_stub)
+    if stub_hits:
+        score += stub_hits * cfg.tool_stub_boost
+
+    # Help text: BM25-like tf saturation per token
+    if tool_help:
+        help_lower = tool_help.lower()
+        for t in tokens:
+            if not t:
+                continue
+            tf = help_lower.count(t)
+            score += cfg.tool_help_boost * _bm25_tf(tf, cfg.tool_help_bm25f_k1)
+
+    return score

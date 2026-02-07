@@ -276,3 +276,48 @@ Scope and rules used for each batch:
     - benchmark: `toolshed.g2.bx.psu.edu/repos/recetox/matchms_similarity/matchms_similarity/0.20.0+galaxy0` (not found in the local snapshot)
     - snapshot: `toolshed.g2.bx.psu.edu/repos/recetox/matchms/matchms/0.17.0+galaxy0`
     - Kept the benchmark ID and added the snapshot-valid alternative.
+
+## Statistics Topic Review (2026-02-02)
+- Status: **expanded**
+- Date: 2026-02-02
+- Scope: Full review of statistics topic (111 items)
+
+### Summary
+Reviewed all 111 queries in the statistics topic according to:
+- `skills/galaxy-query-rewrite/SKILL.md` (query rewrite rules)
+- `skills/galaxy-ground-truth-expansion/SKILL.md` (ground truth expansion rules)
+
+### Query Rewrite Assessment
+- **No rewrites needed**: All queries meet the guidelines
+- "Configuration help" flagged queries (e.g., `statistics-FNN-q011`, `statistics-fruit_360-q013`) actually refer to model configuration files (Keras config), not tool parameter help
+- "Hyperparameter" mentions are legitimate ML hyperparameter tuning tool recommendations
+
+### Ground Truth Expansion
+
+#### Added `tabular_learner` (6 items)
+Rationale: `tabular_learner` is a versatile AutoML tool that supports various ML algorithms including linear models, tree-based ensembles, and produces interpretable results with feature importance. It is a valid same-intent alternative for general classification/regression tasks.
+
+| ID | Original Tool | Query Intent |
+|---|---|---|
+| `statistics-age-prediction-with-ml-q014` | sklearn_ensemble | tree-based ensemble for regression |
+| `statistics-classification_machinelearning-q011` | sklearn_generalized_linear | interpretable linear/logistic model |
+| `statistics-classification_machinelearning-q015` | sklearn_ensemble | ensemble model for classification |
+| `statistics-classification_regression-q013` | sklearn_ensemble | ensemble approach for classification/regression |
+| `statistics-regression_machinelearning-q011` | sklearn_generalized_linear | GLM with coefficients |
+| `statistics-regression_machinelearning-q013` | sklearn_ensemble | tree-based ensemble |
+
+#### Added `ludwig_experiment` (6 items)
+Rationale: `ludwig_experiment` is a declarative deep learning tool that can train and evaluate neural networks end-to-end from a YAML/JSON config, supporting the same train-and-evaluate workflow as Keras tools. Note: Ludwig has its own predict method for Ludwig-trained models only.
+
+| ID | Original Tool | Query Intent |
+|---|---|---|
+| `statistics-CNN-q014` | keras_train_and_eval | train neural network, evaluate accuracy/loss |
+| `statistics-FNN-q013` | keras_train_and_eval | end-to-end training with metrics |
+| `statistics-RNN-q013` | keras_train_and_eval | fit model, report performance |
+| `statistics-fruit_360-q015` | keras_train_and_eval | end-to-end training |
+| `statistics-intro_deep_learning-q013` | keras_train_and_eval | fit model, report performance |
+| `statistics-intro_deep_learning-q016` | keras_train_and_eval | end-to-end training |
+
+### Total Changes
+- 12 items expanded with alternative ground truth tools
+- 0 queries rewritten

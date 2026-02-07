@@ -23,10 +23,10 @@ This repo includes a one-command runner that generates predictions and scores th
 
 ```bash
 # Build / refresh the candidate tool catalog (recommended: panel tools only)
-python3 -m scripts.catalog.build_usegalaxy_tool_catalog --server https://usegalaxy.org --in-panel --include-io-details
+python -m scripts.catalog.build_usegalaxy_tool_catalog --server https://usegalaxy.org --in-panel --include-io-details
 
 OPENAI_API_KEY=... \
-python3 -m scripts.eval.run_v1_agent_eval \
+python -m scripts.eval.run_v1_agent_eval \
   --agent llm \
   --model gpt-4o-mini \
   --provider openai_compatible \
@@ -46,11 +46,11 @@ Note: the LLM prompt contains only the user query plus tool-catalog candidates (
 To use a non-OpenAI provider:
 
 - Anthropic:
-  - `ANTHROPIC_API_KEY=... python3 -m scripts.eval.run_v1_agent_eval --agent llm --provider anthropic --api-url https://api.anthropic.com/v1/messages --model claude-3-5-sonnet-latest`
+  - `ANTHROPIC_API_KEY=... python -m scripts.eval.run_v1_agent_eval --agent llm --provider anthropic --api-url https://api.anthropic.com/v1/messages --model claude-3-5-sonnet-latest`
 - Gemini:
-  - `GEMINI_API_KEY=... python3 -m scripts.eval.run_v1_agent_eval --agent llm --provider gemini --api-url https://generativelanguage.googleapis.com/v1beta --model gemini-1.5-pro`
+  - `GEMINI_API_KEY=... python -m scripts.eval.run_v1_agent_eval --agent llm --provider gemini --api-url https://generativelanguage.googleapis.com/v1beta --model gemini-1.5-pro`
 - Ollama (local):
-  - `python3 -m scripts.eval.run_v1_agent_eval --agent llm --provider ollama --api-url http://localhost:11434/api/chat --model llama3.1`
+  - `python -m scripts.eval.run_v1_agent_eval --agent llm --provider ollama --api-url http://localhost:11434/api/chat --model llama3.1`
 
 ## Setup (optional)
 
@@ -113,13 +113,13 @@ The workflow rules and review checks are documented as Codex skills:
 Build/update the catalog from usegalaxy.org:
 
 - Tool panel only (recommended candidate set):
-  - `python3 -m scripts.catalog.build_usegalaxy_tool_catalog --server https://usegalaxy.org --in-panel --include-io-details`
+  - `python -m scripts.catalog.build_usegalaxy_tool_catalog --server https://usegalaxy.org --in-panel --include-io-details`
   - Outputs:
     - `data/tool_catalog/usegalaxy_org_tools.jsonl`
     - `data/tool_catalog/usegalaxy_org_index.json`
 
 - All installed tools (larger universe; includes non-panel/hidden tools):
-  - `python3 -m scripts.catalog.build_usegalaxy_tool_catalog --server https://usegalaxy.org --no-in-panel --include-io-details`
+  - `python -m scripts.catalog.build_usegalaxy_tool_catalog --server https://usegalaxy.org --no-in-panel --include-io-details`
   - Outputs:
     - `data/tool_catalog/usegalaxy_org_all_tools.jsonl`
     - `data/tool_catalog/usegalaxy_org_all_index.json`
@@ -131,11 +131,11 @@ The expansion scripts mutate `data/benchmark/v1_items.jsonl` in-place and annota
 
 After any update, regenerate the readable export:
 
-`python3 -m scripts.benchmark.export_readable --input data/benchmark/v1_items.jsonl --output data/benchmark/v1_items_readable.md`
+`python -m scripts.benchmark.export_readable --input data/benchmark/v1_items.jsonl --output data/benchmark/v1_items_readable.md`
 
 ## Repo layout
 
 - `data/benchmark/`: benchmark JSONL + readable export
 - `data/tool_catalog/`: usegalaxy.org tool snapshots and indices
-- `scripts/`: utilities for catalog building, exporting, evaluation (organized into subpackages under `scripts/benchmark/`, `scripts/catalog/`, `scripts/eval/`, `scripts/llm/`; run via `python3 -m scripts.<subpkg>.<module>`)
+- `scripts/`: utilities for catalog building, exporting, evaluation (organized into subpackages under `scripts/benchmark/`, `scripts/catalog/`, `scripts/eval/`, `scripts/llm/`; run via `python -m scripts.<subpkg>.<module>`)
 - `skills/`: Codex skills documenting query-generation rules and checks
